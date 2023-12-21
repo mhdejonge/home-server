@@ -1,0 +1,4 @@
+#!/bin/sh
+ssh-keygen -A
+source /usr/admin/adduser.sh
+exec /usr/sbin/sshd -D -e "$@"

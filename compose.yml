@@ -1,0 +1,22 @@
+services:
+  sftp :
+    image: dejonge-sftp
+    ports:
+      - 8022:22
+    volumes:
+      - //d/files:/home/dejonge
+      - //d/admin:/usr/admin
+
+  client :
+    image: dejonge-client
+    ports:
+      - 8080:80
+      - 8443:443
+
+  server :
+    image: dejonge-server
+    ports:
+      - 8081:80
+      - 8444:443
+    volumes:
+      - //d/files:/home/dejonge

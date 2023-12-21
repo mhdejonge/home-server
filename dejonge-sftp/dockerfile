@@ -1,0 +1,5 @@
+FROM alpine:latest
+RUN apk add --update --no-cache openssh 
+COPY sftp-dejonge /usr/bin
+EXPOSE 22
+ENTRYPOINT ["/usr/bin/sftp-dejonge"]

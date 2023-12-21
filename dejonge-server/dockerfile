@@ -1,0 +1,5 @@
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+COPY ../api/bin/publish /api
+EXPOSE 80
+EXPOSE 443
+CMD ["dotnet", "/api/home-server"]
