@@ -1,0 +1,5 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine
+COPY bin/publish /api
+EXPOSE 80
+EXPOSE 443
+CMD ["dotnet", "/api/home-server.dll"]
