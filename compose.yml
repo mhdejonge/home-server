@@ -1,6 +1,6 @@
 services:
-  sftp :
-    image: dejonge-sftp
+  ssh :
+    image: dejonge-ssh
     ports:
       - 8022:22
     volumes:
