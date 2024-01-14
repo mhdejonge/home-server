@@ -51,11 +51,13 @@ public class DirectoryService
         return directories.Select(directory => new DirectoryItem
         {
             Type = DirectoryItemType.Directory,
-            FullPath = directory
+            FullPath = directory,
+            Extension = null
         }).Concat(files.Select(file => new DirectoryItem
         {
             Type = DirectoryItemType.File,
-            FullPath = file
+            FullPath = file,
+            Extension = Path.GetExtension(file)
         })).ToList();
     }
 }

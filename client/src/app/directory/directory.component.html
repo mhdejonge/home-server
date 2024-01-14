@@ -1,0 +1,6 @@
+<div *ngFor="let item of items | async">
+  <ng-container *ngSwitch="item.type">
+    <app-directory *ngSwitchCase="'Directory'" [directory]="item"></app-directory>
+    <app-file *ngSwitchCase="'File'" [file]="item"></app-file>
+  </ng-container>
+</div>
