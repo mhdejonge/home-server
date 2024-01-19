@@ -1,0 +1,29 @@
+version: '3.1'
+services:
+  server:
+    container_name: server
+    image: jetbrains/teamcity-server:latest
+    ports:
+      - "8111:8111"
+    volumes:
+      - //d/teamcity/server:/data/teamcity_server/datadir
+    mem_limit: 2g
+    user: root
+  agent-1:
+    container_name: agent-1
+    image: jetbrains/teamcity-minimal-agent:latest
+    environment:
+      - SERVER_URL=http://server:8111
+      - AGENT_NAME=agent-1
+    volumes:
+      - //d/teamcity/agent-1:/data/teamcity_agent/conf
+    user: root
+  agent-2:
+    container_name: agent-2
+    image: jetbrains/teamcity-minimal-agent:latest
+    environment:
+      - SERVER_URL=http://server:8111
+      - AGENT_NAME=agent-2
+    volumes:
+      - //d/teamcity/agent-2:/data/teamcity_agent/conf
+    user: root

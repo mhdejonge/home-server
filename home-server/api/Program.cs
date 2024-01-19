@@ -1,5 +1,6 @@
 using DeJonge.HomeServer.Entities;
 using DeJonge.HomeServer.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,7 @@ builder.Services.AddSingleton<DirectoryService>();
 
 builder.Services.AddControllers();
 
-builder.Services.AddAuthentication().AddJwtBearer(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new()
     {
@@ -31,6 +32,8 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 var application = builder.Build();
 
 application.UseRouting();
+
+application.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 application.UseAuthentication();
 
