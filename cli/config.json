@@ -1,0 +1,7 @@
+{
+  "baseDir": "C:\\Users\\mdejonge\\Work\\home-server",
+  "appDirs": {
+    "main": "home-server",
+    "teamcity": "teamcity"
+  }
+}

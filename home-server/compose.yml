@@ -1,20 +1,32 @@
 services:
-  ssh :
-    image: dejonge-ssh
+  ssh:
+    container_name: ssh
+    image: dejonge/home-server-ssh
+    build:
+      context: ssh
+      dockerfile: dockerfile
     ports:
       - 8022:22
     volumes:
       - //d/files:/home/dejonge
       - //d/admin:/usr/admin
 
-  client :
-    image: dejonge-client
+  client:
+    container_name: client
+    image: dejonge/home-server-client
+    build:
+      context: client
+      dockerfile: dockerfile
     ports:
       - 8080:80
       - 8443:443
 
-  server :
-    image: dejonge-server
+  server:
+    container_name: server
+    image: dejonge/home-server-api
+    build:
+      context: api
+      dockerfile: dockerfile
     ports:
       - 8081:80
       - 8444:443
