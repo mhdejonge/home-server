@@ -3,12 +3,14 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY . ./
 RUN dotnet restore home-server.sln
-# RUN dotnet publish home-server.csproj -c Release -r linux-x64 --no-self-contained -o bin/publish
 RUN dotnet publish home-server.csproj -c Release -o bin/publish
 
 # RUN
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
-COPY --from=build /app/bin/publish /api
-EXPOSE 80
-EXPOSE 443
-CMD ["dotnet", "/api/home-server.dll"]
+WORKDIR /api
+COPY --from=build /app/bin/publish .
+ENV ASPNETCORE_HTTP_PORTS=80
+# ASPNETCORE_HTTPS_PORTS=443
+EXPOSE 80 
+# 443
+CMD ["dotnet", "home-server.dll"]

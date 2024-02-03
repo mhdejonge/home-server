@@ -32,3 +32,4 @@ services:
       - 8444:443
     volumes:
       - //d/files:/home/dejonge
+      - //d/admin:/usr/admin

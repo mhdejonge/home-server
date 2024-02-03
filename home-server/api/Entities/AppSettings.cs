@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 
 public class AppSettings
 {
+    public const string FilePath = "/api/appsettings.json";
+
     public required string ConfigurationPath { get; init; }
 
     public required string PublicPasscode { get; init; }
