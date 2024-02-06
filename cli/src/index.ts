@@ -1,29 +1,29 @@
-import { CliConfig } from './cli-config';
-import { runCommand } from './run-command';
+import { loadConfig } from './config';
+import { compose, prune } from './docker';
 
 export function main(): string[] | void {
   if (process.argv.length < 3) {
     console.log('Enter a command. Use mld help for available commands.');
   }
-  const config = CliConfig.load();
+  const config = loadConfig();
   const command = process.argv[2];
   const args = process.argv.slice(3);
   const arg0 = args[0];
   switch (command) {
     case 'up':
-      runCommand(['docker', 'compose', 'up', '-d'], config.getAppDir(arg0));
+      compose(['up', '-d'], config.getAppDir(arg0));
       break;
     case 'down':
-      runCommand(['docker', 'compose', 'down', '-v'], config.getAppDir(arg0));
+      compose(['down', '-v'], config.getAppDir(arg0));
       break;
     case 'build':
-      runCommand(['docker', 'compose', 'build'], config.getAppDir(arg0));
+      compose(['build'], config.getAppDir(arg0));
       break;
     case 'prune':
-      runCommand(['docker', 'system', 'prune', '--volumes', '--force']);
+      prune(['--volumes', '--force']);
       break;
     case 'clear':
-      runCommand(['docker', 'system', 'prune', '--all', '--volumes', '--force']);
+      prune(['--all', '--volumes', '--force']);
       break;
     default: {
       console.log('mld up [app=main]: create and start a compose app');
