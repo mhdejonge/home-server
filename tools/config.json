@@ -1,7 +1,7 @@
 {
   "baseDir": "D:\\code",
   "appDirs": {
-    "main": "home-server",
+    "main": "server",
     "teamcity": "teamcity"
   }
 }

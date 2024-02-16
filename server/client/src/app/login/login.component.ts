@@ -23,7 +23,7 @@ import { TokenService } from 'services';
 export class LoginComponent {
   constructor(builder: FormBuilder, route: ActivatedRoute, private readonly tokenService: TokenService) {
     this.form = builder.nonNullable.group({
-      passcode: builder.nonNullable.control('', [Validators.minLength(6), Validators.maxLength(32)])
+      passcode: builder.nonNullable.control('', [Validators.minLength(4), Validators.maxLength(16)])
     });
     this.returnUrl = route.snapshot.queryParamMap.get('returnUrl') ?? '';
   }

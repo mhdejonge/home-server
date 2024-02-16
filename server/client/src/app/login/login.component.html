@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="ngOnSubmit()">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Passcode</mat-label>
-      <input matInput type="text" formGroupName="passcode">
+      <input matInput type="text" formControlName="passcode">
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit" class="full-width">Submit</button>
   </form>

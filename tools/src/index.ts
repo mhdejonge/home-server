@@ -22,7 +22,7 @@ export function main(): string[] | void {
     case 'prune':
       prune(['--volumes', '--force']);
       break;
-    case 'clear':
+    case 'clean':
       prune(['--all', '--volumes', '--force']);
       break;
     default: {
@@ -30,7 +30,7 @@ export function main(): string[] | void {
       console.log('mld down [app=main]: stop and remove a compose app');
       console.log('mld build [app=main]: build a compose app');
       console.log('mld prune: deletes unused local docker data');
-      console.log('mld clear: delete all local docker data');
+      console.log('mld clean: delete all local docker data');
       break;
     }
   }

@@ -11,6 +11,6 @@ export class ApiService {
 
   getDirectoryInfo(path: string | undefined): Observable<DirectoryItem[]> {
     const params = path ? { path } : undefined;
-    return this.httpClient.get<DirectoryItem[]>('http://localhost:5140/api/ls/', { params });
+    return this.httpClient.get<DirectoryItem[]>('/api/ls/', { params });
   }
 }

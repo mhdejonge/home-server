@@ -27,7 +27,7 @@ export class TokenService {
   }
 
   login(passcode: string): Observable<void> {
-    return this.httpClient.post('http://localhost:5140/api/auth/', { passcode }, { responseType: 'text' })
+    return this.httpClient.post('/api/auth/', { passcode }, { responseType: 'text' })
       .pipe(tap(accessToken => this.accessToken = accessToken), map(() => undefined));
   }
 }
