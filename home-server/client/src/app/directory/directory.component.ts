@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ApiService } from 'services';
+import { FileComponent } from 'app/file';
 import { DirectoryItem } from 'entities';
-import { AsyncPipe } from "@angular/common";
-import { FileComponent } from "app/file";
+import { ApiService } from 'services';
 
 @Component({
   selector: 'app-directory',

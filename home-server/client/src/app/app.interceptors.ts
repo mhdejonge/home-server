@@ -1,11 +1,13 @@
-import { HttpInterceptorFn } from "@angular/common/http";
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { TokenService } from 'services';
 
 export const interceptors: HttpInterceptorFn[] = [
-    (req, next) =>{
-        const auth = localStorage.getItem('access-token');
-        if (auth) {
-            req = req.clone({setHeaders: {Authorization: auth} });
+    (request, next) => {
+        const token = inject(TokenService).accessToken
+        if (token) {
+            request = request.clone({ setHeaders: { Authorization: token } });
         }
-        return next(req);
+        return next(request);
     }
 ]
