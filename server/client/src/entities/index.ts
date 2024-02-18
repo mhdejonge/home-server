@@ -1,1 +1,1 @@
-export * from './directory-item';
+export * from './autoindex-item';

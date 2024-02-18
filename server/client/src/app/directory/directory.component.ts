@@ -1,25 +1,35 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FileComponent } from 'app/file';
-import { DirectoryItem } from 'entities';
+import { AutoindexItem } from 'entities';
 import { ApiService } from 'services';
 
 @Component({
   selector: 'app-directory',
   standalone: true,
   imports: [
-    FileComponent
+    CommonModule,
+    FileComponent,
+    RouterLink,
+    MatDividerModule
   ],
   templateUrl: './directory.component.html',
   styleUrl: './directory.component.scss'
 })
 export class DirectoryComponent implements OnInit {
-  constructor(private readonly apiService: ApiService) { }
+  constructor(private readonly route: ActivatedRoute, private readonly apiService: ApiService) { }
 
-  @Input() directory?: DirectoryItem;
+  currentDirectory?: string;
 
-  items: DirectoryItem[] = [];
+  items?: AutoindexItem[];
 
   ngOnInit(): void {
-    this.apiService.getDirectoryInfo(this.directory?.fullPath).subscribe(directoryInfo => this.items = directoryInfo);
+    this.route.url.subscribe(segments => {
+      const pathSegments = segments.map(segment => segment.path);
+      this.currentDirectory = pathSegments.join('/');
+      this.apiService.getDirectoryInfo(this.currentDirectory).subscribe(directoryInfo => this.items = directoryInfo);
+    });
   }
 }

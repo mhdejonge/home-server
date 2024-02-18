@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 public class AppSettings
 {
-    public const string FilePath = "/api/appsettings.json";
+    public const string FileName = "appsettings.json";
 
     public required string ConfigurationPath { get; init; }
 

@@ -2,8 +2,8 @@
   "name": "dejonge-home-server",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "lint": "ng lint"
+    "build": "ng build",
+    "lint": "ng lint --fix"
   },
   "private": true,
   "dependencies": {

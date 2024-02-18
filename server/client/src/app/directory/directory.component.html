@@ -1,6 +1,10 @@
-@for (item of items; track item.fullPath) {
-    <ng-container *ngSwitch="item.type">
-      <app-directory *ngSwitchCase="'Directory'" [directory]="item"></app-directory>
-      <app-file *ngSwitchCase="'File'" [file]="item"></app-file>
-    </ng-container>
+<h1 class="nas-header">Index of /{{currentDirectory}}</h1>
+<mat-divider></mat-divider>
+<a *ngIf="currentDirectory" routerLink=".." class="nas-item">../</a>
+@for (item of items; track item.name;) {
+  <ng-container [ngSwitch]="item.type">
+    <a [routerLink]="item.name" *ngSwitchCase="'directory'" class="nas-item">{{ item.name }}</a>
+    <app-file *ngSwitchCase="'file'" [file]="item" class="nas-item"></app-file>
+  </ng-container>
 }
+<mat-divider></mat-divider>

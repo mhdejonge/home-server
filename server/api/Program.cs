@@ -1,16 +1,21 @@
+using System.Reflection;
 using DeJonge.HomeServer.Entities;
 using DeJonge.HomeServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile(AppSettings.FilePath);
+builder.Configuration.SetBasePath(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
+
+builder.Configuration.AddJsonFile(AppSettings.FileName);
 
 var appSettings = builder.Configuration.Get<AppSettings>()!;
 
-builder.Configuration.AddJsonFile(appSettings.ConfigurationPath);
-
-appSettings = builder.Configuration.Get<AppSettings>()!;
+if (builder.Environment.IsProduction())
+{
+    builder.Configuration.AddJsonFile(appSettings.ConfigurationPath);
+    appSettings = builder.Configuration.Get<AppSettings>()!;
+}
 
 builder.Services.AddSingleton(appSettings);
 

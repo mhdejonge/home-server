@@ -7,23 +7,29 @@ import { LoginComponent } from './login/login.component';
 const isLoggedIn: CanActivateFn = () => {
   const router = inject(Router);
   const tokenService = inject(TokenService);
-  return tokenService.isLoggedIn ? true : router.createUrlTree(['/login'], {
-    queryParams: {
-      returnUrl: router.url
-    }
-  });
-}
+  const queryParams = router.url && router.url !== '/' ? { returnUrl: router.url } : null;
+  return tokenService.isLoggedIn ? true : router.createUrlTree(['/login'], { queryParams });
+};
 
 export const routes: Routes = [
   {
     path: 'login',
-    pathMatch: 'prefix',
     component: LoginComponent
+  },
+  {
+    path: 'storage',
+    children: [
+      {
+        path: '**',
+        component: DirectoryComponent
+      }
+    ],
+    canActivate: [isLoggedIn],
+    canActivateChild: [isLoggedIn]
   },
   {
     path: '',
     pathMatch: 'full',
-    component: DirectoryComponent,
-    canActivate: [isLoggedIn]
+    redirectTo: 'storage'
   }
 ];

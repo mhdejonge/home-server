@@ -22,26 +22,13 @@ public class DirectoryService
         {
             return false;
         }
-        var pathInfo = new DirectoryInfo(Path.TrimEndingDirectorySeparator(path));
-        return IsAllowedDirectory(new DirectoryInfo(_appSettings.PublicDirectory), pathInfo) ||
-               (allowPrivate && IsAllowedDirectory(new DirectoryInfo(_appSettings.PrivateDirectory), pathInfo));
+        return IsAllowedDirectory(_appSettings.PublicDirectory, path) || (allowPrivate && IsAllowedDirectory(_appSettings.PrivateDirectory, path));
     }
 
-    private static bool IsAllowedDirectory(DirectoryInfo parentDirectory, DirectoryInfo childDirectory)
+    private static bool IsAllowedDirectory(string parentDirectory, string childDirectory)
     {
-        if (childDirectory.FullName == parentDirectory.FullName)
-        {
-            return true;
-        }
-        while (childDirectory.Parent != null)
-        {
-            if (childDirectory.Parent.FullName == parentDirectory.FullName)
-            {
-                return true;
-            }
-            childDirectory = childDirectory.Parent;
-        }
-        return false;
+        childDirectory = EnsureEndingDirectorySeparator(childDirectory);
+        return childDirectory.StartsWith(parentDirectory);
     }
 
     public List<DirectoryItem> ListDirectory(string path)
@@ -59,5 +46,10 @@ public class DirectoryService
             FullPath = file,
             Extension = Path.GetExtension(file)
         })).ToList();
+    }
+
+    private static string EnsureEndingDirectorySeparator(string path)
+    {
+        return Path.TrimEndingDirectorySeparator(path) + Path.DirectorySeparatorChar;
     }
 }

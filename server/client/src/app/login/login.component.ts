@@ -4,7 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenService } from 'services';
 
 @Component({
@@ -21,11 +22,17 @@ import { TokenService } from 'services';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(builder: FormBuilder, route: ActivatedRoute, private readonly tokenService: TokenService) {
+  constructor(
+    builder: FormBuilder,
+    route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar,
+    private readonly tokenService: TokenService
+  ) {
     this.form = builder.nonNullable.group({
       passcode: builder.nonNullable.control('', [Validators.minLength(4), Validators.maxLength(16)])
     });
-    this.returnUrl = route.snapshot.queryParamMap.get('returnUrl') ?? '';
+    this.returnUrl = route.snapshot.queryParamMap.get('returnUrl') ?? '/';
   }
 
   form: FormGroup<{
@@ -38,7 +45,11 @@ export class LoginComponent {
     if (this.form.invalid) {
       return;
     }
-    this.tokenService.login(this.form.value.passcode!)
-      .subscribe();
+    this.tokenService.login(this.form.value.passcode!).subscribe({
+      next: () => this.router.navigate([this.returnUrl]),
+      error: () => this.snackBar.open('Passcode is incorrect.', 'Dismiss', {
+        duration: 5000
+      })
+    });
   }
 }
