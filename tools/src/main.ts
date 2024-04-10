@@ -1,23 +1,21 @@
 import { loadConfig } from './config';
 import { compose, prune } from './docker';
 
-export function main(): string[] | void {
-  if (process.argv.length < 3) {
+export function main(args: string[]): void {
+  if (process.argv.length < 1) {
     console.log('Enter a command. Use mld help for available commands.');
   }
   const config = loadConfig();
-  const command = process.argv[2];
-  const args = process.argv.slice(3);
-  const arg0 = args[0];
-  switch (command) {
+  const arg1 = args[1];
+  switch (args[0]) {
     case 'up':
-      compose(['up', '-d'], config.getAppDir(arg0));
+      compose(['up', '-d'], config.getAppDir(arg1));
       break;
     case 'down':
-      compose(['down', '-v'], config.getAppDir(arg0));
+      compose(['down', '-v'], config.getAppDir(arg1));
       break;
     case 'build':
-      compose(['build'], config.getAppDir(arg0));
+      compose(['build'], config.getAppDir(arg1));
       break;
     case 'prune':
       prune(['--volumes', '--force']);

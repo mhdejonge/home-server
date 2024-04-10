@@ -8,8 +8,5 @@
     "strictPropertyInitialization": false,
     "skipLibCheck": true,
     "outDir": "dist"
-  },
-  "files": [
-    "src/index.ts"
-  ]
+  }
 }
