@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using DeJonge.HomeServer.Entities;
 using DeJonge.HomeServer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

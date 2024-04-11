@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { FileComponent } from 'app/file';
 import { AutoindexItem } from 'entities';
+import { FileComponent } from 'app/file';
 import { ApiService } from 'services';
 
 @Component({
