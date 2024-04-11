@@ -36,7 +36,7 @@ export class LoginComponent {
   }
 
   form: FormGroup<{
-    passcode: FormControl<string>
+    passcode: FormControl<string>;
   }>;
 
   returnUrl: string;

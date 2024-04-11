@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "home-server", "home-server.csproj", "{8B0FED57-C2AD-47EB-901A-9CC1C20D387A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "home-server", "src/home-server.csproj", "{8B0FED57-C2AD-47EB-901A-9CC1C20D387A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

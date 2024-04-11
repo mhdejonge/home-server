@@ -1,11 +1,11 @@
-namespace DeJonge.HomeServer.Controllers;
+﻿namespace DeJonge.HomeServer.Controllers;
 
 using System.Security.Claims;
 using DeJonge.HomeServer.Constants;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using DeJonge.HomeServer.Entities;
 using DeJonge.HomeServer.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 [Authorize]
 [ApiController]

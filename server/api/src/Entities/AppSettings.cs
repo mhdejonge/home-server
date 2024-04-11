@@ -25,8 +25,5 @@ public class AppSettings
 
     public required TimeSpan JwtLifespan { get; init; }
 
-    public SecurityKey MakeJwtKey()
-    {
-        return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret));
-    }
+    public SecurityKey MakeJwtKey() => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret));
 }
