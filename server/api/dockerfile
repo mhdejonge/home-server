@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 COPY . ./
 RUN dotnet restore home-server.sln
-RUN dotnet publish home-server.csproj -c Release -o bin/publish
+RUN dotnet publish src/home-server.csproj -c Release -o bin/publish
 
 # RUN
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine

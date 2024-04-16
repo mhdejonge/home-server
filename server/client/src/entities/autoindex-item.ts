@@ -1,9 +1,9 @@
 export interface AutoindexItem {
-    name: string;
-    
-    type: string;
+  name: string;
 
-    mtime?: string;
+  type: string;
 
-    size?: number;
+  mtime?: string;
+
+  size?: number;
 }
