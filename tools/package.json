@@ -5,10 +5,10 @@
   "main": "index.js",
   "author": "Matthew DeJonge",
   "license": "MIT",
-  "private": false,
   "dependencies": {
     "@types/node": "^20.12.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.4"
-  }
+  },
+  "packageManager": "yarn@4.1.1"
 }

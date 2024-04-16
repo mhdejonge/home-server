@@ -8,7 +8,7 @@ services:
     ports:
       - 8022:22
     volumes:
-      - //d/files:/home/dejonge
+      - //d/files:/home/nas
       - //d/admin:/usr/admin
 
   client:
@@ -20,6 +20,9 @@ services:
     ports:
       - 8080:80
       - 8443:443
+    volumes:
+      - //d/files:/home/nas
+      - //d/admin:/usr/admin
 
   server:
     container_name: server
@@ -31,5 +34,5 @@ services:
       - 8081:80
       - 8444:443
     volumes:
-      - //d/files:/home/dejonge
+      - //d/files:/home/nas
       - //d/admin:/usr/admin
