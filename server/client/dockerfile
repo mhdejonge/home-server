@@ -1,8 +1,9 @@
 # BUILD
 FROM node:lts-alpine as build
+RUN corepack enable
 WORKDIR /app
 COPY . ./
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 RUN yarn build --configuration=production
 
 # RUN
