@@ -1,10 +1,12 @@
 <h1 class="nas-header">Index of /{{currentDirectory}}</h1>
 <mat-divider></mat-divider>
-<a *ngIf="currentDirectory" routerLink=".." class="nas-item">../</a>
-@for (item of items; track item.name;) {
-  <ng-container [ngSwitch]="item.type">
-    <a [routerLink]="item.name" *ngSwitchCase="'directory'" class="nas-item">{{ item.name }}</a>
-    <app-file *ngSwitchCase="'file'" [file]="item" class="nas-item"></app-file>
-  </ng-container>
+@if (currentDirectory) {
+  <a routerLink=".." class="nas-item">../</a>
+  @for (item of items; track item.name;) {
+    <ng-container [ngSwitch]="item.type">
+      <a [routerLink]="item.name" *ngSwitchCase="'directory'" class="nas-item">{{ item.name }}</a>
+      <app-file *ngSwitchCase="'file'" [directory]="currentDirectory" [file]="item" class="nas-item"></app-file>
+    </ng-container>
+  }
 }
 <mat-divider></mat-divider>

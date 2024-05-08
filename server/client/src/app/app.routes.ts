@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router, Routes } from '@angular/router';
+import { CanActivateFn, Route, Router, Routes } from '@angular/router';
 import { DirectoryComponent } from 'app/directory';
 import { TokenService } from 'services';
 import { LoginComponent } from './login/login.component';
@@ -11,25 +11,31 @@ const isLoggedIn: CanActivateFn = () => {
   return tokenService.isLoggedIn ? true : router.createUrlTree(['/login'], { queryParams });
 };
 
-export const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'storage',
+const filesRoute = (basePath: string): Route => {
+  return {
+    path: basePath,
     children: [
       {
         path: '**',
+        data: { basePath },
         component: DirectoryComponent
       }
     ],
     canActivate: [isLoggedIn],
     canActivateChild: [isLoggedIn]
+  };
+};
+
+export const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
   },
+  filesRoute('files'),
+  filesRoute('locked'),
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'storage'
+    redirectTo: 'files'
   }
 ];

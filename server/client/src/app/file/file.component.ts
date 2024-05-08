@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AutoindexItem } from 'entities';
 import { environment } from 'environments';
 
@@ -17,15 +17,13 @@ import { environment } from 'environments';
   styleUrl: './file.component.scss'
 })
 export class FileComponent implements OnInit {
-  constructor(private readonly route: ActivatedRoute) { }
-
-  fullPath!: string;
+  @Input() directory!: string;
 
   @Input() file!: AutoindexItem;
 
+  fullPath!: string;
+
   ngOnInit(): void {
-    this.route.url.subscribe(segments => {
-      this.fullPath = `${environment.nasRoot}/${segments.map(segment => segment.path).join('/')}/${this.file.name}`;
-    });
+    this.fullPath = `${environment.nasRoot}/${this.directory}/${this.file.name}`;
   }
 }

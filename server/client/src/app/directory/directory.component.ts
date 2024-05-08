@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { combineLatest } from 'rxjs';
 import { AutoindexItem } from 'entities';
 import { FileComponent } from 'app/file';
 import { ApiService } from 'services';
@@ -26,8 +27,8 @@ export class DirectoryComponent implements OnInit {
   items?: AutoindexItem[];
 
   ngOnInit(): void {
-    this.route.url.subscribe(segments => {
-      const pathSegments = segments.map(segment => segment.path);
+    combineLatest([this.route.url, this.route.data]).subscribe(([segments, data]) => {
+      const pathSegments = [data['basePath'], ...segments.map(segment => segment.path)];
       this.currentDirectory = pathSegments.join('/');
       this.apiService.getDirectoryInfo(this.currentDirectory).subscribe(directoryInfo => this.items = directoryInfo);
     });

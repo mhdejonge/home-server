@@ -188,9 +188,6 @@
         "import/order": [
           "warn",
           {
-            "alphabetize": {
-              "order": "asc"
-            },
             "groups": [
               "builtin",
               "external",

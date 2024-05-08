@@ -11,6 +11,9 @@ export class ApiService {
   constructor(private readonly httpClient: HttpClient) { }
 
   getDirectoryInfo(path: string): Observable<AutoindexItem[]> {
+    if (!path) {
+      throw new Error('path must have a value');
+    }
     path = `${environment.nasRoot}/${path}/`;
     return this.httpClient.get<AutoindexItem[]>(path);
   }

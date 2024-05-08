@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[AllowAnonymous]
+[Authorize]
 [Route("api/nas")]
 public class NetworkAttachedStorageController : ControllerBase
 {
-    [HttpGet("files")]
+    [HttpGet("files/{**slug}")]
     public IActionResult Files()
     {
         return User.FindFirst(CustomClaims.AccessType) != null ? Ok() : Forbid();
     }
 
-    [HttpGet("locked")]
+    [HttpGet("locked/{**slug}")]
     public IActionResult Locked()
     {
         return User.FindFirstValue(CustomClaims.AccessType) == AccessType.Private ? Ok() : Forbid();
