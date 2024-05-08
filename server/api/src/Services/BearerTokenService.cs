@@ -2,30 +2,47 @@
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using DeJonge.HomeServer.Entities;
+using System.Security.Cryptography;
+using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 
-public class BearerTokenService
+public class BearerTokenService(AppSettings appSettings)
 {
-    private readonly AppSettings _appSettings;
-    private readonly JwtSecurityTokenHandler _tokenHandler;
-    private readonly SigningCredentials _signingCredentials;
-
-    public BearerTokenService(AppSettings appSettings)
-    {
-        _appSettings = appSettings;
-        _tokenHandler = new();
-        _signingCredentials = new(appSettings.MakeJwtKey(), SecurityAlgorithms.HmacSha256);
-    }
+    private readonly JwtSecurityTokenHandler _tokenHandler = new();
+    private JsonWebKeySet _jsonWebKeySet = default!;
 
     public string CreateToken(params Claim[] claims)
     {
-        var issuer = _appSettings.JwtIssuer;
-        var audience = _appSettings.JwtAudience;
+        var issuer = appSettings.JwtIssuer;
+        var audience = appSettings.JwtAudience;
         var notBefore = DateTime.Now;
-        var expires = notBefore.Add(_appSettings.JwtLifespan);
-        var header = new JwtHeader(_signingCredentials);
+        var expires = notBefore.Add(appSettings.JwtLifespan);
+        var securityKey = _jsonWebKeySet.Keys.Single();
+        var header = new JwtHeader(new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256));
         var payload = new JwtPayload(issuer, audience, claims, notBefore, expires);
         return _tokenHandler.WriteToken(new JwtSecurityToken(header, payload));
+    }
+
+    public IList<SecurityKey> GetSigningKeys()
+    {
+        return _jsonWebKeySet.GetSigningKeys();
+    }
+
+    public async Task Initialize()
+    {
+        var secretKeyPath = appSettings.JwtSecretKeyPath;
+        if (File.Exists(secretKeyPath))
+        {
+            _jsonWebKeySet = JsonWebKeySet.Create(await File.ReadAllTextAsync(secretKeyPath));
+        }
+        else
+        {
+            var rsaSecurityKey = new RsaSecurityKey(RSA.Create());
+            rsaSecurityKey.KeyId = Base64UrlEncoder.Encode(rsaSecurityKey.ComputeJwkThumbprint());
+            var jsonWebKey = JsonWebKeyConverter.ConvertFromRSASecurityKey(rsaSecurityKey);
+            _jsonWebKeySet = new JsonWebKeySet();
+            _jsonWebKeySet.Keys.Add(jsonWebKey);
+            await File.WriteAllTextAsync(secretKeyPath, JsonSerializer.Serialize(_jsonWebKeySet));
+        }
     }
 }

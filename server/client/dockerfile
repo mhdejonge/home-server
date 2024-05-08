@@ -11,6 +11,6 @@ FROM nginx:mainline-alpine
 COPY --from=build /app/dist /client
 RUN rm -rf /etc/nginx/conf.d
 RUN mkdir /etc/nginx/conf.d
-COPY ./default.conf /etc/nginx/conf.d/
+COPY ./mld.conf /etc/nginx/conf.d/
 EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]

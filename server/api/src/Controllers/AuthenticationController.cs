@@ -1,9 +1,6 @@
 ﻿namespace DeJonge.HomeServer.Controllers;
 
 using System.Security.Claims;
-using DeJonge.HomeServer.Constants;
-using DeJonge.HomeServer.Entities;
-using DeJonge.HomeServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,15 +21,11 @@ public class AuthenticationController : ControllerBase
     [HttpPost]
     public IActionResult Login([FromBody] HomeServerCredentials? credentials)
     {
-        if (credentials?.Passcode == null)
-        {
-            return BadRequest();
-        }
-        if (credentials.Passcode == _appSettings.PublicPasscode)
+        if (credentials?.Passcode == _appSettings.PublicPasscode)
         {
             return Ok(_bearerTokenService.CreateToken(new Claim(CustomClaims.AccessType, AccessType.Public)));
         }
-        if (credentials.Passcode == _appSettings.PrivatePasscode)
+        if (credentials?.Passcode == _appSettings.PrivatePasscode)
         {
             return Ok(_bearerTokenService.CreateToken(new Claim(CustomClaims.AccessType, AccessType.Private)));
         }
