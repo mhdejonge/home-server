@@ -40,6 +40,7 @@ public class BearerTokenService(AppSettings appSettings)
             var rsaSecurityKey = new RsaSecurityKey(RSA.Create());
             rsaSecurityKey.KeyId = Base64UrlEncoder.Encode(rsaSecurityKey.ComputeJwkThumbprint());
             var jsonWebKey = JsonWebKeyConverter.ConvertFromRSASecurityKey(rsaSecurityKey);
+            jsonWebKey.Use = JsonWebKeyUseNames.Sig;
             _jsonWebKeySet = new JsonWebKeySet();
             _jsonWebKeySet.Keys.Add(jsonWebKey);
             await File.WriteAllTextAsync(secretKeyPath, JsonSerializer.Serialize(_jsonWebKeySet));

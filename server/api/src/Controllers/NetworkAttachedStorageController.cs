@@ -1,7 +1,6 @@
-﻿using System.Security.Claims;
+﻿namespace DeJonge.HomeServer.Controllers;
 
-namespace DeJonge.HomeServer.Controllers;
-
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +12,12 @@ public class NetworkAttachedStorageController : ControllerBase
     [HttpGet("files/{**slug}")]
     public IActionResult Files()
     {
-        return User.FindFirst(CustomClaims.AccessType) != null ? Ok() : Forbid();
+        return User.FindFirstValue(CustomClaims.AccessType) is AccessType.Public or AccessType.Private ? Ok() : Forbid();
     }
 
     [HttpGet("locked/{**slug}")]
     public IActionResult Locked()
     {
-        return User.FindFirstValue(CustomClaims.AccessType) == AccessType.Private ? Ok() : Forbid();
+        return User.FindFirstValue(CustomClaims.AccessType) is AccessType.Private ? Ok() : Forbid();
     }
 }
