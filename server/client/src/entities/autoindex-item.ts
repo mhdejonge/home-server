@@ -6,4 +6,6 @@ export interface AutoindexItem {
   mtime?: string;
 
   size?: number;
+
+  downloadLink?: string;
 }

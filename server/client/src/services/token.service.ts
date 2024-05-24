@@ -14,8 +14,8 @@ export class TokenService {
     return !!this.accessToken;
   }
 
-  get accessToken(): string | null {
-    return localStorage.getItem(this.key);
+  get accessToken(): string {
+    return localStorage.getItem(this.key) ?? '';
   }
 
   set accessToken(value: string | null) {

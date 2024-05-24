@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Route, Router, Routes } from '@angular/router';
-import { DirectoryComponent } from 'app/directory';
+import { AuthComponent } from 'app/auth';
+import { NasComponent } from 'app/nas';
 import { TokenService } from 'services';
-import { LoginComponent } from './login/login.component';
 
 const isLoggedIn: CanActivateFn = () => {
   const router = inject(Router);
@@ -18,7 +18,7 @@ const filesRoute = (basePath: string): Route => {
       {
         path: '**',
         data: { basePath },
-        component: DirectoryComponent
+        component: NasComponent
       }
     ],
     canActivate: [isLoggedIn],
@@ -29,7 +29,7 @@ const filesRoute = (basePath: string): Route => {
 export const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: AuthComponent
   },
   filesRoute('files'),
   filesRoute('locked'),

@@ -53,5 +53,5 @@
     "stylelint-scss": "^6.2.1",
     "typescript": "~5.2.2"
   },
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.2.2"
 }
